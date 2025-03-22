@@ -34,20 +34,21 @@ public_users.post("/register", (req,res) => {
 });
 
 // Get the book list available in the shop
-public_users.get('/', function (req, res) {
-    new Promise((resolve, reject) => {
-        // Here asynchronous operation can be performed, like fetching data
-        // For demonstration, we'll resolve the promise immediately with the books data
-        resolve({ books });
-    })
-    .then((data) => {
+public_users.get('/', async (req, res) =>{
+    try {
+        // Simulate an asynchronous operation using a Promise
+        const data = await new Promise((resolve, reject) => {
+            // Here you can perform any asynchronous operation, like fetching data
+            // For demonstration, we'll resolve the promise immediately with the books data
+            resolve({ books });
+        });
+
         // Send the response with the books data
         res.send(JSON.stringify(data, null, 4));
-    })
-    .catch((error) => {
+    } catch (error) {
         // Handle any errors that occur during the promise execution
-        res.status(500).send("An error occurred while fetching the books.");
-    });
+        res.status(400).send("An error occurred while fetching the books.");
+    }
 });
 
 // Get book details based on ISBN
